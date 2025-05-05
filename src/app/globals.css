@@ -1,1 +1,33 @@
 @import "tailwindcss";
+.postContent {
+  p {
+    text-align: justify;
+  }
+  p,
+  table {
+    margin-bottom: 10px;
+    img {
+      @apply mx-auto;
+    }
+  }
+  h2 {
+    @apply text-2xl mb-2 mt-4 text-red-700;
+  }
+  table {
+    @apply border-collapse border border-slate-400 w-full;
+    th {
+      @apply text-red-700 border border-slate-300 p-2;
+    }
+    td {
+      @apply border border-slate-300 p-2;
+    }
+  }
+}
+.postItem {
+  .ant-card-meta-title {
+    overflow: unset;
+    white-space: unset;
+    text-overflow: unset;
+    @apply line-clamp-2;
+  }
+}

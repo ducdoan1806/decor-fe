@@ -7,11 +7,17 @@ import { FaDollarSign, FaBars, FaTimes } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa6";
 
 const menu = [
-  { name: "Thiết kế cửa hàng", link: "/category/store-designer" },
-  { name: "Ma nơ canh", link: "/category/monocanh" },
-  { name: "Móc quần áo", link: "/category/clothes-hanger" },
+  {
+    name: "Sản phẩm",
+    link: "/category/store-designer",
+    submenu: [
+      { name: "Concept A", link: "/category/store-designer/concept-a" },
+      { name: "Concept B", link: "/category/store-designer/concept-b" },
+    ],
+  },
+
   { name: "Liên hệ", link: "/category/contact" },
-  { name: "Tư vấn", link: "/category/consult" },
+  { name: "Về chúng tôi", link: "#" },
 ];
 
 const Header = () => {
@@ -41,24 +47,40 @@ const Header = () => {
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center space-x-2">
           {menu.map((item) => (
-            <Link
-              key={item.link}
-              href={item.link}
-              className={`p-1 text-black border-b-2 border-transparent transition-all duration-200 hover:border-black ${
-                pathname.split("/")[2] === item.link.split("/")[2]
-                  ? "border-black"
-                  : ""
-              }`}
-            >
-              {item.name}
-            </Link>
+            <div key={item.link} className="relative group">
+              <Link
+                href={item.link}
+                className={`p-2 text-black border-b-2 border-transparent transition-all duration-200 hover:border-black ${
+                  pathname.startsWith(item.link) ? "border-black" : ""
+                }`}
+              >
+                {item.name}
+              </Link>
+
+              {item.submenu && (
+                <div className="absolute overflow-hidden top-[29px] -left-1 bg-white shadow rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 invisible group-hover:visible z-10">
+                  <ul className="text-sm">
+                    {item.submenu.map((sub) => (
+                      <li key={sub.link}>
+                        <Link
+                          href={sub.link}
+                          className="block px-4 py-2 whitespace-nowrap hover:bg-gray-100"
+                        >
+                          {sub.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           ))}
 
-          <button className="bg-black text-white px-4 py-1 rounded-md flex items-center gap-1 cursor-pointer">
-            <FaDollarSign /> Báo giá
+          <button className="bg-black text-white px-4 py-1 rounded-md flex items-center space-x-1 cursor-pointer">
+            <FaDollarSign /> <p>Báo giá</p>
           </button>
-          <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md flex items-center gap-1 cursor-pointer">
-            <FaPhone /> Liên hệ
+          <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md flex items-center space-x-1 cursor-pointer">
+            <FaPhone /> <p>Liên hệ</p>
           </button>
         </nav>
 
@@ -94,29 +116,47 @@ const Header = () => {
         </div>
         <nav className="flex flex-col p-4 space-y-2">
           {menu.map((item) => (
-            <Link key={item.link} href={item.link}>
-              <button
-                onClick={toggleMobileMenu}
-                className={`text-lg text-black border-b-2 border-transparent pb-2 transition-all duration-200 hover:border-black \$
-                  {pathname.split("/")[2] === item.link.split("/")[2] ? "border-black" : ""}
-                `}
-              >
-                {item.name}
-              </button>
-            </Link>
+            <div key={item.link}>
+              <Link href={item.link}>
+                <button
+                  onClick={() => {
+                    toggleMobileMenu();
+                  }}
+                  className={`w-full text-left text-lg text-black border-b-2 border-transparent pb-2 transition-all duration-200 hover:border-black ${
+                    pathname.startsWith(item.link) ? "border-black" : ""
+                  }`}
+                >
+                  {item.name}
+                </button>
+              </Link>
+              {item.submenu && (
+                <div className="pl-4 mt-1">
+                  {item.submenu.map((sub) => (
+                    <Link key={sub.link} href={sub.link}>
+                      <button
+                        onClick={toggleMobileMenu}
+                        className="block w-full text-left text-base py-1 hover:text-blue-600"
+                      >
+                        {sub.name}
+                      </button>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
 
           <button
-            className="w-full bg-black text-white px-4 py-2 rounded-md flex items-center justify-center gap-2"
+            className="w-full bg-black text-white px-4 py-2 rounded-md flex items-center justify-center space-x-2"
             onClick={toggleMobileMenu}
           >
-            <FaDollarSign /> Báo giá
+            <FaDollarSign /> <p>Báo giá</p>
           </button>
           <button
-            className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md flex items-center justify-center gap-2"
+            className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md flex items-center justify-center space-x-2"
             onClick={toggleMobileMenu}
           >
-            <FaPhone /> Liên hệ
+            <FaPhone /> <p>Liên hệ</p>
           </button>
         </nav>
       </div>
