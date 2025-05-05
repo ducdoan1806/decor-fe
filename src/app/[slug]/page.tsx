@@ -24,7 +24,19 @@ interface Post {
   author_name: string;
   published_at: string;
   content: string;
+  description: string;
   categories: Category[];
+}
+export async function generateMetadata({ params }: PageProps) {
+  const { slug: rawSlug } = await params;
+  const slug = rawSlug.replace(/\.html$/, "");
+  const response = await api.get(`/blog/posts/${slug}/`);
+  const post: Post = response?.data;
+
+  return {
+    title: post?.title + " - Anki Decor",
+    description: post?.description,
+  };
 }
 const page = async ({ params }: PageProps) => {
   try {
@@ -53,6 +65,7 @@ const page = async ({ params }: PageProps) => {
                   <FaClock /> <p>{dayjs(post?.published_at).format("HH:MM")}</p>
                 </div>
               </div>
+              <p className="mb-2">{post?.description}</p>
               <div
                 className="postContent"
                 dangerouslySetInnerHTML={{ __html: post?.content }}

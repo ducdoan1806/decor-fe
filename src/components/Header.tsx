@@ -16,7 +16,7 @@ const menu = [
     ],
   },
 
-  { name: "Liên hệ", link: "/category/contact" },
+  { name: "Liên hệ", link: "/contact" },
   { name: "Về chúng tôi", link: "#" },
 ];
 
