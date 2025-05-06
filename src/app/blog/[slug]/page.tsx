@@ -12,7 +12,7 @@ import { Tag } from "antd";
 import { TagFilled } from "@ant-design/icons";
 import PostItem from "@/components/PostItem";
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; category: string }>;
 }
 
 interface Category {

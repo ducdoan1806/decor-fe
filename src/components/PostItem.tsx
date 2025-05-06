@@ -2,9 +2,14 @@
 
 import { Card } from "antd";
 import Image from "next/image";
-import Link from "next/link";
+import React from "react";
 
-const PostItem = () => {
+interface PostItemProps {
+  title?: React.ReactNode;
+  description?: string;
+}
+
+const PostItem = ({ title, description }: PostItemProps) => {
   return (
     <div className="postItem">
       <Card
@@ -19,16 +24,7 @@ const PostItem = () => {
           />
         }
       >
-        <Card.Meta
-          title={
-            <Link href="#">
-              <h3 className="text-red-700 hover:text-red-500">
-                Các phương pháp trồng răng cửa hiệu quả cho hàm dưới
-              </h3>
-            </Link>
-          }
-          description="This is the description"
-        />
+        <Card.Meta title={title} description={description} />
       </Card>
     </div>
   );
