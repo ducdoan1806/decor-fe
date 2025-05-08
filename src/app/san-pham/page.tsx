@@ -1,3 +1,4 @@
+import MyBreadcrumb from "@/components/MyBreadcrumb";
 import PostItem from "@/components/PostItem";
 import api from "@/utils/api";
 import { Metadata } from "next";
@@ -25,6 +26,9 @@ const page = async ({ searchParams }: PageProps) => {
       `/products/?pageSize=999&search=${category || ""}`
     );
     const products = res?.data?.results || [];
+    if (products.length === 0) {
+      notFound();
+    }
     return (
       <Suspense
         fallback={
@@ -35,6 +39,7 @@ const page = async ({ searchParams }: PageProps) => {
       >
         <div className="bg-gray-50">
           <div className="container mx-auto px-4 py-5">
+            <MyBreadcrumb />
             <h1 className="mb-3 text-3xl text-red-700 font-semibold">
               Danh sách sản phẩm
             </h1>
@@ -44,8 +49,8 @@ const page = async ({ searchParams }: PageProps) => {
                   key={item?.id}
                   description={item?.description}
                   title={
-                    <Link href={`/products/${item?.slug}.html`}>
-                      <h2 className="text-red-700 hover:text-red-500">
+                    <Link href={`/san-pham/${item?.slug}.html`}>
+                      <h2 className="text-red-700 hover:text-red-500 text-lg">
                         {item?.name || "--"}
                       </h2>
                     </Link>

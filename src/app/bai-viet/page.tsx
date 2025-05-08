@@ -1,3 +1,4 @@
+import MyBreadcrumb from "@/components/MyBreadcrumb";
 import PostItem from "@/components/PostItem";
 import { Metadata } from "next";
 import React from "react";
@@ -9,6 +10,7 @@ const page = () => {
   return (
     <div className="bg-gray-50">
       <div className="container mx-auto px-4 py-5">
+        <MyBreadcrumb />
         <h1 className="mb-3 text-3xl text-red-700 font-semibold">
           Bài viết gần đây
         </h1>

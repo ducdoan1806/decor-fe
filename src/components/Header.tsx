@@ -8,10 +8,10 @@ import { FaPhone } from "react-icons/fa6";
 
 // Define menu entries with optional category
 const menu = [
-  { name: "Thiết kế nội thất", href: "/blog" },
-  { name: "Ma nơ canh", href: "/products", category: "ma-no-canh" },
-  { name: "Móc treo", href: "/products", category: "moc-treo" },
-  { name: "Liên hệ", href: "/contact" },
+  { name: "Thiết kế nội thất", href: "/bai-viet" },
+  { name: "Ma nơ canh", href: "/san-pham", category: "ma-no-canh" },
+  { name: "Móc treo", href: "/san-pham", category: "moc-treo" },
+  { name: "Liên hệ", href: "/lien-he" },
 ];
 
 const Header = () => {

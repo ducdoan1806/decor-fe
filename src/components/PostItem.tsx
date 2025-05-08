@@ -7,9 +7,10 @@ import React from "react";
 interface PostItemProps {
   title?: React.ReactNode;
   description?: string;
+  image?: string;
 }
 
-const PostItem = ({ title, description }: PostItemProps) => {
+const PostItem = ({ title, description, image }: PostItemProps) => {
   return (
     <div className="postItem">
       <Card
@@ -17,14 +18,17 @@ const PostItem = ({ title, description }: PostItemProps) => {
         cover={
           <Image
             width={400}
-            height={300}
-            src="https://placehold.co/400x300"
+            height={400}
+            src={image || "https://placehold.co/400x300"}
             unoptimized
             alt=""
           />
         }
       >
-        <Card.Meta title={title} description={description} />
+        <Card.Meta
+          title={title}
+          description={<p className="line-clamp-3">{description}</p>}
+        />
       </Card>
     </div>
   );
