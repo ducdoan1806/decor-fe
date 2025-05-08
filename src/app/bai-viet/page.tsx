@@ -11,17 +11,31 @@ export const metadata: Metadata = {
   title: "Danh sách bài viết - Anki Decor",
   description: "Nội thất shop Anki Decor",
 };
-const page = async () => {
+interface PageProps {
+  searchParams: Promise<{ category?: string }>;
+}
+const page = async ({ searchParams }: PageProps) => {
   try {
-    const response = await api.get("/blog/posts/?page_size=999");
-    const posts: Post[] = response.data.results;
+    const { category } = await searchParams;
+    const response = await api.get(
+      `/blog/posts/?page_size=999&categories=${category || ""}`
+    );
+    const posts: Post[] = response.data.results || [];
+    if (posts.length === 0) {
+      notFound();
+    }
     return (
       <div className="bg-gray-50">
         <div className="container mx-auto px-4 py-5">
           <MyBreadcrumb />
-          <h1 className="mb-3 text-3xl text-red-700 font-semibold">
-            Bài viết gần đây
-          </h1>
+          <div className="mb-3">
+            <h1 className="text-3xl text-red-700 font-semibold">
+              Bài viết gần đây
+            </h1>
+            {category && (
+              <p className="mt-1 text-gray-500 italic">Danh mục: {category}</p>
+            )}
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
             {posts.map((item) => (
               <PostItem

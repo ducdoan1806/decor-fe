@@ -74,14 +74,14 @@ const page = async ({ params }: PageProps) => {
                 dangerouslySetInnerHTML={{ __html: post?.content }}
               />
               <div className="py-2 px-1 border-t border-b border-gray-200">
-                <div className="font-semibold flex space-x-2">
-                  <p>Chuyên mục:</p>
+                <div className="font-semibold flex">
+                  <p className="mr-2">Chuyên mục:</p>
                   {post.categories.map((item) => (
-                    <div key={item?.id}>
+                    <Link key={item?.id} href={`/bai-viet?category=${item?.slug}`}>
                       <Tag color="#3b5999" icon={<TagFilled />}>
                         {item?.name}
                       </Tag>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>
