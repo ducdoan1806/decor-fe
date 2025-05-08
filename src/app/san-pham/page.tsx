@@ -1,5 +1,6 @@
 import MyBreadcrumb from "@/components/MyBreadcrumb";
 import PostItem from "@/components/PostItem";
+import { Product } from "@/types";
 import api from "@/utils/api";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -12,12 +13,6 @@ export const metadata: Metadata = {
 interface PageProps {
   searchParams: Promise<{ category?: string }>;
 }
-interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  description: string;
-}
 
 const page = async ({ searchParams }: PageProps) => {
   try {
@@ -26,6 +21,9 @@ const page = async ({ searchParams }: PageProps) => {
       `/products/?pageSize=999&search=${category || ""}`
     );
     const products = res?.data?.results || [];
+    const checkCategory = products.find(
+      (item) => item?.category.slug === category
+    );
     if (products.length === 0) {
       notFound();
     }
@@ -40,14 +38,23 @@ const page = async ({ searchParams }: PageProps) => {
         <div className="bg-gray-50">
           <div className="container mx-auto px-4 py-5">
             <MyBreadcrumb />
-            <h1 className="mb-3 text-3xl text-red-700 font-semibold">
-              Danh sách sản phẩm
-            </h1>
+            <div className="mb-3">
+              <h1 className="text-3xl text-red-700 font-semibold">
+                Danh sách sản phẩm
+              </h1>
+              {checkCategory && (
+                <p className="mt-1 text-gray-500 italic">
+                  Danh mục: {checkCategory?.category?.name}
+                </p>
+              )}
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
               {products.map((item: Product) => (
                 <PostItem
                   key={item?.id}
                   description={item?.description}
+                  image={item?.images[0]?.image}
                   title={
                     <Link href={`/san-pham/${item?.slug}.html`}>
                       <h2 className="text-red-700 hover:text-red-500 text-lg">

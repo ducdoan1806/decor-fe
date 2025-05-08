@@ -8,25 +8,14 @@ import { notFound } from "next/navigation";
 import dayjs from "dayjs";
 import MyBreadcrumb from "@/components/MyBreadcrumb";
 import SidebarForm from "@/components/SidebarForm";
-import { Tag } from "antd";
+import { Tag, Tooltip } from "antd";
 import { TagFilled } from "@ant-design/icons";
 import PostItem from "@/components/PostItem";
+import { Post } from "@/types";
 interface PageProps {
   params: Promise<{ slug: string; category: string }>;
 }
 
-interface Category {
-  id: string;
-  name: string;
-}
-interface Post {
-  title: string;
-  author_name: string;
-  published_at: string;
-  content: string;
-  description: string;
-  categories: Category[];
-}
 export async function generateMetadata({ params }: PageProps) {
   const { slug: rawSlug } = await params;
   const slug = rawSlug.replace(/\.html$/, "");
@@ -44,6 +33,20 @@ const page = async ({ params }: PageProps) => {
     const slug = rawSlug.replace(/\.html$/, "");
     const response = await api.get(`/blog/posts/${slug}/`);
     const post: Post = response?.data;
+    const data = await Promise.all([
+      api.get(
+        `/blog/posts/?categories=${post?.categories
+          .map((item) => item?.slug)
+          .join(",")}&page_size=5`
+      ),
+      api.get(`/blog/posts/?page_size=5`),
+    ]);
+    const samePost: Post[] = data[0].data.results.filter(
+      (item: Post) => item?.id !== post?.id
+    );
+    const newestPost: Post[] = data[1].data.results.filter(
+      (item: Post) => item?.id !== post?.id
+    );
     return (
       <div className="bg-gray-50">
         <div className="container mx-auto px-4 py-4">
@@ -89,25 +92,30 @@ const page = async ({ params }: PageProps) => {
                   Bài viết mới nhất
                 </div>
                 <div className="space-y-2">
-                  <div className="flex space-x-2">
-                    <div className="max-w-[130px] min-w-[130px]">
-                      <Image
-                        width={400}
-                        height={400}
-                        src="https://placehold.co/400x400"
-                        unoptimized
-                        alt=""
-                      />
-                    </div>
-                    <h3>
+                  {newestPost.map((item) => (
+                    <div className="flex space-x-2" key={item?.id}>
+                      <div className="max-w-[130px] min-w-[130px]">
+                        <Image
+                          width={400}
+                          height={400}
+                          src={
+                            item?.thumbnail || "https://placehold.co/400x400"
+                          }
+                          unoptimized
+                          alt=""
+                        />
+                      </div>
+
                       <Link
-                        href="#"
+                        href={`/bai-viet/${item?.slug}.html`}
                         className="text-red-700 font-semibold hover:text-red-500 text-sm"
                       >
-                        Các phương pháp trồng răng cửa hiệu quả cho hàm dưới
+                        <Tooltip title={item?.title}>
+                          <h3 className="line-clamp-2">{item?.title}</h3>
+                        </Tooltip>
                       </Link>
-                    </h3>
-                  </div>
+                    </div>
+                  ))}
                 </div>
               </div>
               <SidebarForm />
@@ -118,21 +126,35 @@ const page = async ({ params }: PageProps) => {
               Bài viết liên quan
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
-              <PostItem />
-              <PostItem />
-              <PostItem />
-              <PostItem />
-              <PostItem />
-              <PostItem />
-              <PostItem />
-              <PostItem />
+              {samePost.map((item) => (
+                <PostItem
+                  key={item?.id}
+                  description={
+                    item?.description || (
+                      <span
+                        dangerouslySetInnerHTML={{ __html: item?.content }}
+                      />
+                    )
+                  }
+                  image={item?.thumbnail}
+                  title={
+                    <Tooltip title={item?.title || ""}>
+                      <Link href={`/bai-viet/${item?.slug}.html`}>
+                        <h2 className="text-red-700 hover:text-red-500 text-lg line-clamp-2">
+                          {item?.title || "--"}
+                        </h2>
+                      </Link>
+                    </Tooltip>
+                  }
+                />
+              ))}
             </div>
           </div>
         </div>
       </div>
     );
   } catch (e) {
-    console.log(e);
+    console.error(e);
     notFound();
   }
 };

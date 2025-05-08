@@ -1,5 +1,6 @@
 import MyBreadcrumb from "@/components/MyBreadcrumb";
 import PostItem from "@/components/PostItem";
+import { Product } from "@/types";
 import api from "@/utils/api";
 import { Carousel } from "antd";
 import Image from "next/image";
@@ -10,37 +11,11 @@ import { FaCartArrowDown } from "react-icons/fa";
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
-interface ProductType {
-  id: number;
-  name: string;
-  slug: string;
-  description: string;
-  price: string; // dùng string nếu giữ nguyên kiểu dữ liệu như trong JSON
-  category: {
-    id: number;
-    name: string;
-    slug: string;
-  };
-  created_at: string; // ISO date string
-  updated_at: string; // ISO date string
-  images: {
-    id: number;
-    image: string;
-    alt_text: string;
-    sort_order: number;
-  }[];
-  variants: {
-    id: number;
-    variant_name: string;
-    extra_price: string; // cũng có thể đổi sang number nếu bạn parse dữ liệu
-    stock: number;
-  }[];
-}
 export async function generateMetadata({ params }: PageProps) {
   const { slug: rawSlug } = await params;
   const slug = rawSlug.replace(/\.html$/, "");
   const response = await api.get(`/products/${slug}/`);
-  const post: ProductType = response.data;
+  const post: Product = response.data;
 
   return {
     title: post?.name + " - Anki Decor",
@@ -51,12 +26,12 @@ const page = async ({ params }: PageProps) => {
   const { slug: rawSlug } = await params;
   const slug = rawSlug.replace(/\.html$/, "");
   const response = await api.get(`/products/${slug}/`);
-  const post: ProductType = response.data;
+  const post: Product = response.data;
   const responseProduct = await api.get(
     `/products/?search=${post?.category?.slug}&page_size=5`
   );
-  const sameProduct: ProductType[] = responseProduct.data.results.filter(
-    (item: ProductType) => item?.id !== post?.id
+  const sameProduct: Product[] = responseProduct.data.results.filter(
+    (item: Product) => item?.id !== post?.id
   );
   return (
     <div className="container mx-auto px-4 py-5">
@@ -102,8 +77,11 @@ const page = async ({ params }: PageProps) => {
             <div className="text-red-700 font-semibold text-xl">
               Sản phẩm liên quan
             </div>
-            <Link href="/san-pham" className="text-red-500 hover:text-red-600 hover:underline">
-              Xem thêm {'>>'}
+            <Link
+              href="/san-pham"
+              className="text-red-500 hover:text-red-600 hover:underline"
+            >
+              Xem thêm {">>"}
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">

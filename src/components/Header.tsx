@@ -65,10 +65,10 @@ const Header = () => {
             );
           })}
 
-          <button className="bg-black text-white px-4 py-1 rounded-md flex items-center space-x-1">
+          <button className="bg-black text-white px-4 py-1 rounded-md flex items-center space-x-1 cursor-pointer">
             <FaDollarSign /> <span>Báo giá</span>
           </button>
-          <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md flex items-center space-x-1">
+          <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md flex items-center space-x-1 cursor-pointer">
             <FaPhone /> <span>Liên hệ</span>
           </button>
         </nav>

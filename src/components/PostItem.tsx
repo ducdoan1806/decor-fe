@@ -6,7 +6,7 @@ import React from "react";
 
 interface PostItemProps {
   title?: React.ReactNode;
-  description?: string;
+  description?: React.ReactNode;
   image?: string;
 }
 
@@ -17,8 +17,8 @@ const PostItem = ({ title, description, image }: PostItemProps) => {
         size="small"
         cover={
           <Image
-            width={400}
-            height={400}
+            width={350}
+            height={350}
             src={image || "https://placehold.co/400x300"}
             unoptimized
             alt=""
