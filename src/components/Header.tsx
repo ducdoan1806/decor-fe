@@ -27,7 +27,7 @@ const Header = () => {
     toggleMobileMenu();
   };
   return (
-    <header className="bg-white py-2 sticky top-0 z-50 shadow">
+    <header className="bg-white py-2 sticky top-0 z-1 shadow">
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="block w-20">

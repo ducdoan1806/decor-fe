@@ -7,7 +7,6 @@ import { Carousel } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FaCartArrowDown } from "react-icons/fa";
 
 interface PageProps {
   params: Promise<{ slug: string }>;

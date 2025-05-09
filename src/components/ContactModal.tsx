@@ -1,7 +1,8 @@
 "use client";
+import api from "@/utils/api";
 import { useOutside } from "@/utils/useOutSide";
-import { Form, Input } from "antd";
-import { useRef } from "react";
+import { Button, Form, Input } from "antd";
+import { useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
 interface ContactModalProps {
@@ -11,11 +12,38 @@ interface ContactModalProps {
 }
 
 const ContactModal = ({ onClose, title, ctaText }: ContactModalProps) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [form] = Form.useForm();
   const ref = useRef<HTMLDivElement>(null);
-  const handleSendContact = () => {
-    form.getFieldsValue();
-    console.log("form.getFieldsValue();: ", form.getFieldsValue());
+  const handleSendContact = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const data = form.getFieldsValue();
+      await api.post(`/contacts/`, {
+        name: data.name ? data.name.trim() : "",
+        phone_number: data.phone ? data.phone.trim() : "",
+        message: data.description ? data.description.trim() : "",
+      });
+      onClose();
+    } catch (error) {
+      console.error(error);
+      if (
+        error instanceof Error &&
+        (error as { response?: { data?: unknown } }).response?.data
+      ) {
+        setError(
+          JSON.stringify(
+            (error as { response?: { data?: unknown } })?.response?.data
+          )
+        );
+      } else {
+        setError("An unexpected error occurred.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
   useOutside(ref, onClose);
   return (
@@ -51,13 +79,20 @@ const ContactModal = ({ onClose, title, ctaText }: ContactModalProps) => {
                 autoSize={{ minRows: 5, maxRows: 7 }}
               />
             </Form.Item>
+            {error && (
+              <Form.Item>
+                <p className="text-center text-red-600">{error}</p>
+              </Form.Item>
+            )}
             <Form.Item>
-              <button
-                type="submit"
-                className="bg-red-700 p-2 w-full rounded-md text-white cursor-pointer transition-all hover:bg-red-600 hover:shadow"
+              <Button
+                htmlType="submit"
+                type="primary"
+                loading={loading}
+                className="w-full !bg-red-700 hover:!bg-red-600"
               >
                 {ctaText}
-              </button>
+              </Button>
             </Form.Item>
           </Form>
         </div>
