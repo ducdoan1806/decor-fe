@@ -5,8 +5,8 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { FaDollarSign, FaBars, FaTimes } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa6";
+import ContactModal from "./ContactModal";
 
-// Define menu entries with optional category
 const menu = [
   { name: "Thiết kế nội thất", href: "/bai-viet" },
   { name: "Ma nơ canh", href: "/san-pham", category: "ma-no-canh" },
@@ -18,8 +18,14 @@ const Header = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const toggleMobileMenu = () => setMobileOpen((prev) => !prev);
-
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const toggleMobileMenu = () => {
+    setMobileOpen((prev) => !prev);
+  };
+  const handleOpenModal = () => {
+    setIsOpenModal(!isOpenModal);
+    toggleMobileMenu();
+  };
   return (
     <header className="bg-white py-2 sticky top-0 z-50 shadow">
       <div className="container mx-auto px-4 flex items-center justify-between">
@@ -68,7 +74,10 @@ const Header = () => {
           <button className="bg-black text-white px-4 py-1 rounded-md flex items-center space-x-1 cursor-pointer">
             <FaDollarSign /> <span>Báo giá</span>
           </button>
-          <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md flex items-center space-x-1 cursor-pointer">
+          <button
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md flex items-center space-x-1 cursor-pointer"
+            onClick={handleOpenModal}
+          >
             <FaPhone /> <span>Liên hệ</span>
           </button>
         </nav>
@@ -142,12 +151,19 @@ const Header = () => {
           </button>
           <button
             className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md flex items-center justify-center space-x-2"
-            onClick={toggleMobileMenu}
+            onClick={handleOpenModal}
           >
             <FaPhone /> <span>Liên hệ</span>
           </button>
         </nav>
       </div>
+      {isOpenModal && (
+        <ContactModal
+          title="Thông tin liên hệ"
+          ctaText="Gửi thông tin"
+          onClose={() => setIsOpenModal(false)}
+        />
+      )}
     </header>
   );
 };

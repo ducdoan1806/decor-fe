@@ -6,7 +6,7 @@ import React from "react";
 
 interface PostItemProps {
   title?: React.ReactNode;
-  description?: React.ReactNode;
+  description?: string;
   image?: string;
 }
 
@@ -27,7 +27,11 @@ const PostItem = ({ title, description, image }: PostItemProps) => {
       >
         <Card.Meta
           title={title}
-          description={<p className="line-clamp-3">{description}</p>}
+          description={
+            <p className="line-clamp-3">
+              {description ? description.replace(/^<p>|<\/p>$/g, "") : ""}
+            </p>
+          }
         />
       </Card>
     </div>

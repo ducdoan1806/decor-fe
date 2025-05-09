@@ -40,7 +40,7 @@ const page = async ({ searchParams }: PageProps) => {
             {posts.map((item) => (
               <PostItem
                 key={item?.id}
-                description={item?.description}
+                description={item?.description || item?.content}
                 image={item?.thumbnail}
                 title={
                   <Tooltip title={item?.title || ""}>

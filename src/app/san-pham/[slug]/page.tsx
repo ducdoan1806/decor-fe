@@ -1,4 +1,5 @@
 import MyBreadcrumb from "@/components/MyBreadcrumb";
+import OrderButton from "@/components/OrderButton";
 import PostItem from "@/components/PostItem";
 import { Product } from "@/types";
 import api from "@/utils/api";
@@ -63,10 +64,7 @@ const page = async ({ params }: PageProps) => {
             }).format(Number(post?.price) || 0)}
           </p>
           <div className="flex space-x-2">
-            <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 cursor-pointer rounded-md flex items-center space-x-1">
-              <FaCartArrowDown className="text-lg" />{" "}
-              <span className="block ml-1">Đặt hàng ngay</span>
-            </button>
+            <OrderButton />
           </div>
           <p className="text-gray-700">{post?.description}</p>
         </div>

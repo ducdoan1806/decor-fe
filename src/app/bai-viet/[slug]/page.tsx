@@ -77,7 +77,10 @@ const page = async ({ params }: PageProps) => {
                 <div className="font-semibold flex">
                   <p className="mr-2">Chuyên mục:</p>
                   {post.categories.map((item) => (
-                    <Link key={item?.id} href={`/bai-viet?category=${item?.slug}`}>
+                    <Link
+                      key={item?.id}
+                      href={`/bai-viet?category=${item?.slug}`}
+                    >
                       <Tag color="#3b5999" icon={<TagFilled />}>
                         {item?.name}
                       </Tag>
@@ -129,13 +132,7 @@ const page = async ({ params }: PageProps) => {
               {samePost.map((item) => (
                 <PostItem
                   key={item?.id}
-                  description={
-                    item?.description || (
-                      <span
-                        dangerouslySetInnerHTML={{ __html: item?.content }}
-                      />
-                    )
-                  }
+                  description={item?.description || item?.content}
                   image={item?.thumbnail}
                   title={
                     <Tooltip title={item?.title || ""}>
