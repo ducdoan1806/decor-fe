@@ -21,10 +21,13 @@ export interface Category {
   name: string;
   slug: string;
 }
-export interface Product {
+export interface ProductType {
   id: number;
   name: string;
   slug: string;
+  content?: string;
+  thumbnail?: string;
+  title?: string;
   description: string;
   price: string; // dùng string nếu giữ nguyên kiểu dữ liệu như trong JSON
   category: {

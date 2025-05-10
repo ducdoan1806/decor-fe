@@ -1,6 +1,6 @@
 import MyBreadcrumb from "@/components/MyBreadcrumb";
 import PostItem from "@/components/PostItem";
-import { Product } from "@/types";
+import { ProductType } from "@/types";
 import api from "@/utils/api";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -21,8 +21,8 @@ const page = async ({ searchParams }: PageProps) => {
       `/products/?pageSize=999&search=${category || ""}`
     );
     const products = res?.data?.results || [];
-    const checkProduct: Product = products.find(
-      (item: Product) => item?.category.slug === category
+    const checkProduct: ProductType = products.find(
+      (item: ProductType) => item?.category.slug === category
     );
     if (products.length === 0) {
       notFound();
@@ -50,7 +50,7 @@ const page = async ({ searchParams }: PageProps) => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
-              {products.map((item: Product) => (
+              {products.map((item: ProductType) => (
                 <PostItem
                   key={item?.id}
                   description={item?.description}

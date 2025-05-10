@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { FaDollarSign, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa6";
 import ContactModal from "./ContactModal";
 
@@ -71,9 +71,9 @@ const Header = () => {
             );
           })}
 
-          <button className="bg-black text-white px-4 py-1 rounded-md flex items-center space-x-1 cursor-pointer">
+          {/* <button className="bg-black text-white px-4 py-1 rounded-md flex items-center space-x-1 cursor-pointer">
             <FaDollarSign /> <span>Báo giá</span>
-          </button>
+          </button> */}
           <button
             className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-md flex items-center space-x-1 cursor-pointer"
             onClick={handleOpenModal}
@@ -143,12 +143,12 @@ const Header = () => {
             );
           })}
 
-          <button
+          {/* <button
             className="w-full bg-black text-white px-4 py-2 rounded-md flex items-center justify-center space-x-2"
             onClick={toggleMobileMenu}
           >
             <FaDollarSign /> <span>Báo giá</span>
-          </button>
+          </button> */}
           <button
             className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md flex items-center justify-center space-x-2"
             onClick={handleOpenModal}

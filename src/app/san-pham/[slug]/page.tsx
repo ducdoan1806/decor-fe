@@ -1,7 +1,7 @@
 import MyBreadcrumb from "@/components/MyBreadcrumb";
 import OrderButton from "@/components/OrderButton";
 import PostItem from "@/components/PostItem";
-import { Product } from "@/types";
+import { ProductType } from "@/types";
 import api from "@/utils/api";
 import { Carousel } from "antd";
 import Image from "next/image";
@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: PageProps) {
   const { slug: rawSlug } = await params;
   const slug = rawSlug.replace(/\.html$/, "");
   const response = await api.get(`/products/${slug}/`);
-  const post: Product = response.data;
+  const post: ProductType = response.data;
 
   return {
     title: post?.name + " - Anki Decor",
@@ -26,12 +26,12 @@ const page = async ({ params }: PageProps) => {
   const { slug: rawSlug } = await params;
   const slug = rawSlug.replace(/\.html$/, "");
   const response = await api.get(`/products/${slug}/`);
-  const post: Product = response.data;
+  const post: ProductType = response.data;
   const responseProduct = await api.get(
     `/products/?search=${post?.category?.slug}&page_size=5`
   );
-  const sameProduct: Product[] = responseProduct.data.results.filter(
-    (item: Product) => item?.id !== post?.id
+  const sameProduct: ProductType[] = responseProduct.data.results.filter(
+    (item: ProductType) => item?.id !== post?.id
   );
   return (
     <div className="container mx-auto px-4 py-5">
