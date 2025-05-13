@@ -15,7 +15,21 @@ const Contact = async () => {
   try {
     const response = await api.get("/contact-info/");
     const data: RawContact[] = response?.data.results;
+    console.log("data: ", data);
     const location = data.find((item) => item.image);
+    const grouped = Object.values(
+      data.reduce(
+        (acc: Record<string, { type: string; data: RawContact[] }>, item) => {
+          if (!acc[item.type]) {
+            acc[item.type] = { type: item.type, data: [] };
+          }
+          acc[item.type].data.push(item);
+          return acc;
+        },
+        {}
+      )
+    );
+    console.log(grouped);
     return (
       <div className="bg-gray-50">
         <div className="container mx-auto px-4 py-8">
@@ -24,28 +38,37 @@ const Contact = async () => {
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <div className="space-y-3">
-              {data.map((item) => (
+              {grouped.map((item) => (
                 <div
-                  key={item?.id}
-                  className="flex items-center overflow-hidden bg-white shadow rounded-md"
+                  key={item?.type}
+                  className="flex overflow-hidden bg-white shadow rounded-md"
                 >
-                  <p className="text-white bg-black p-5 h-full text-2xl">
-                    <ContactIcon contactItem={item} />
+                  <p className="text-white flex items-center justify-center bg-black flex-1 text-2xl max-w-[70px]">
+                    <ContactIcon
+                      type={
+                        item.type as "email" | "facebook" | "phone" | "location"
+                      }
+                    />
                   </p>
                   <div className="p-2">
-                    <Link
-                      href={item?.value}
-                      target="_blank"
-                      className="text-red-700 font-semibold uppercase hover:text-red-500"
-                    >
+                    <p className="text-red-700 font-semibold uppercase">
                       {item?.type}
-                    </Link>
-                    <p className="text-gray-600 text-sm">{item?.name}</p>
+                    </p>
+                    {item?.data.map((contact, idx) => (
+                      <Link
+                        key={idx}
+                        href={contact?.value}
+                        target="_blank"
+                        className="text-gray-600 text-sm hover:underline block"
+                      >
+                        {contact?.name}
+                      </Link>
+                    ))}
                   </div>
                 </div>
               ))}
             </div>
-            <div>
+            <div className="shadow-md overflow-hidden rounded-md">
               {location && (
                 <Link target="_blank" href={location.value ?? ""}>
                   <Image

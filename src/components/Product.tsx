@@ -23,9 +23,9 @@ const Product = ({ title, products }: ProductProps) => {
             title={
               <Tooltip title={item?.title || ""}>
                 <Link href={`/bai-viet/${item?.slug}.html`}>
-                  <h2 className="text-red-700 hover:text-red-500 text-lg line-clamp-2">
+                  <h3 className="text-red-700 hover:text-red-500 text-lg line-clamp-2">
                     {item?.title || item?.name || "--"}
-                  </h2>
+                  </h3>
                 </Link>
               </Tooltip>
             }
