@@ -22,10 +22,26 @@ export default async function Home() {
         }
       >
         <Hero slides={res[0].data.results} />
-        <Product title="Thiết kế nội thất" products={res[3].data.results} />
-        <Product title="Ma nơ canh" products={res[2].data.results} />
-        <Product title="Móc treo" products={res[1].data.results} />
-        <Product title="Bài viết mới nhất" products={res[4].data.results} />
+        <Product
+          viewMore="/bai-viet?category=thiet-ke-noi-that"
+          title="Thiết kế nội thất"
+          products={res[3].data.results}
+        />
+        <Product
+          viewMore="/san-pham?category=ma-no-canh"
+          title="Ma nơ canh"
+          products={res[2].data.results}
+        />
+        <Product
+          viewMore="/san-pham?category=moc-treo"
+          title="Móc treo"
+          products={res[1].data.results}
+        />
+        <Product
+          viewMore="/bai-viet"
+          title="Bài viết mới nhất"
+          products={res[4].data.results}
+        />
       </Suspense>
     );
   } catch (e) {

@@ -47,7 +47,7 @@ const Footer = () => {
                 height={400}
                 src="/ankiLogoWhite.png"
                 alt=""
-                className="w-[250px] h-auto"
+                className="mx-auto md:mx-0 w-[250px] h-auto"
               />
             </h3>
             <p className="text-gray-400">
