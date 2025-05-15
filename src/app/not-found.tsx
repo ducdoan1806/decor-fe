@@ -1,10 +1,20 @@
+import { Result } from "antd";
+import Link from "next/link";
+
 export const dynamic = "force-dynamic";
 
 export default function NotFound() {
   return (
-    <div style={{ textAlign: "center", padding: "2rem" }}>
-      <h1>😢 404 – Không tìm thấy trang</h1>
-      <p>Xin lỗi, trang bạn tìm kiếm không tồn tại.</p>
+    <div className="h-[calc(100vh-437px)] flex items-center justify-center">
+      <Result
+        status="404"
+        title="Không tìm thấy trang"
+        extra={[
+          <Link key="home-link" href="/" passHref>
+            <a className="text-blue-600 hover:underline">Về trang chủ</a>
+          </Link>,
+        ]}
+      />
     </div>
   );
 }
