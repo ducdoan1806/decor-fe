@@ -51,7 +51,10 @@ const page = async ({ searchParams }: PageProps) => {
               )}
             </div>
             {products.length === 0 ? (
-              <div className="flex justify-center items-center h-[calc(100vh - 631px)]">
+              <div
+                className="flex justify-center items-center"
+                style={{ height: "calc(100vh - 631px)" }}
+              >
                 <Empty description="Không có sản phẩm nào" />
               </div>
             ) : (
