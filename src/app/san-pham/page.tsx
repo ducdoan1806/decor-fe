@@ -2,6 +2,7 @@ import MyBreadcrumb from "@/components/MyBreadcrumb";
 import PostItem from "@/components/PostItem";
 import { ProductType } from "@/types";
 import api from "@/utils/api";
+import { Empty } from "antd";
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -27,9 +28,7 @@ const page = async ({ searchParams }: PageProps) => {
     const checkProduct: ProductType = products.find(
       (item: ProductType) => item?.category.slug === category
     );
-    if (products.length === 0) {
-      notFound();
-    }
+
     return (
       <Suspense
         fallback={
@@ -51,23 +50,28 @@ const page = async ({ searchParams }: PageProps) => {
                 </p>
               )}
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
-              {products.map((item: ProductType) => (
-                <PostItem
-                  key={item?.id}
-                  description={item?.description}
-                  image={item?.images[0]?.image}
-                  title={
-                    <Link href={`/san-pham/${item?.slug}.html`}>
-                      <h2 className="text-red-700 hover:text-red-500 text-lg">
-                        {item?.name || "--"}
-                      </h2>
-                    </Link>
-                  }
-                />
-              ))}
-            </div>
+            {products.length === 0 ? (
+              <div>
+                <Empty description="Không có sản phẩm nào" />
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
+                {products.map((item: ProductType) => (
+                  <PostItem
+                    key={item?.id}
+                    description={item?.description}
+                    image={item?.images[0]?.image}
+                    title={
+                      <Link href={`/san-pham/${item?.slug}.html`}>
+                        <h2 className="text-red-700 hover:text-red-500 text-lg">
+                          {item?.name || "--"}
+                        </h2>
+                      </Link>
+                    }
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </Suspense>

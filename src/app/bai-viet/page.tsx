@@ -2,7 +2,7 @@ import MyBreadcrumb from "@/components/MyBreadcrumb";
 import PostItem from "@/components/PostItem";
 import { Post } from "@/types";
 import api from "@/utils/api";
-import { Tooltip } from "antd";
+import { Empty, Tooltip } from "antd";
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "Nội thất shop Anki Decor",
 };
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   searchParams: Promise<{ category?: string }>;
@@ -39,24 +39,30 @@ const page = async ({ searchParams }: PageProps) => {
               <p className="mt-1 text-gray-500 italic">Danh mục: {category}</p>
             )}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
-            {posts.map((item) => (
-              <PostItem
-                key={item?.id}
-                description={item?.description || item?.content}
-                image={item?.thumbnail}
-                title={
-                  <Tooltip title={item?.title || ""}>
-                    <Link href={`/bai-viet/${item?.slug}.html`}>
-                      <h2 className="text-red-700 hover:text-red-500 text-lg line-clamp-2">
-                        {item?.title || "--"}
-                      </h2>
-                    </Link>
-                  </Tooltip>
-                }
-              />
-            ))}
-          </div>
+          {posts.length === 0 ? (
+            <div>
+              <Empty description="Không có bài viết nào" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
+              {posts.map((item) => (
+                <PostItem
+                  key={item?.id}
+                  description={item?.description || item?.content}
+                  image={item?.thumbnail}
+                  title={
+                    <Tooltip title={item?.title || ""}>
+                      <Link href={`/bai-viet/${item?.slug}.html`}>
+                        <h2 className="text-red-700 hover:text-red-500 text-lg line-clamp-2">
+                          {item?.title || "--"}
+                        </h2>
+                      </Link>
+                    </Tooltip>
+                  }
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     );
