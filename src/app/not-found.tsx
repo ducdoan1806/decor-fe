@@ -10,8 +10,13 @@ export default function NotFound() {
         status="404"
         title="Không tìm thấy trang"
         extra={[
-          <Link key="home-link" href="/" passHref>
-            <a className="text-blue-600 hover:underline">Về trang chủ</a>
+          <Link
+            className="text-blue-600 hover:underline"
+            key="home-link"
+            href="/"
+            passHref
+          >
+            Về trang chủ
           </Link>,
         ]}
       />

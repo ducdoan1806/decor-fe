@@ -1,5 +1,5 @@
 // app/dang-ky-thanh-cong/page.tsx
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 import { Result } from "antd";
 import Link from "next/link";
 import React, { ReactElement } from "react";
@@ -11,8 +11,13 @@ export default function RegistrationSuccessPage(): ReactElement {
         status="success"
         title="Bạn đã gửi thông tin thành công"
         extra={[
-          <Link key="home-link" href="/" passHref>
-            <a className="text-blue-600 hover:underline">Về trang chủ</a>
+          <Link
+            key="home-link"
+            href="/"
+            passHref
+            className="text-blue-600 hover:underline"
+          >
+            Về trang chủ
           </Link>,
         ]}
       />
