@@ -24,9 +24,6 @@ const page = async ({ searchParams }: PageProps) => {
       `/blog/posts/?page_size=999&categories=${category || ""}`
     );
     const posts: Post[] = response.data.results || [];
-    if (posts.length === 0) {
-      notFound();
-    }
     return (
       <div className="bg-gray-50">
         <div className="container mx-auto px-4 py-5">
