@@ -1,21 +1,21 @@
+// app/dang-ky-thanh-cong/page.tsx
+export const dynamic = 'force-dynamic';
 import { Result } from "antd";
 import Link from "next/link";
-import React from "react";
+import React, { ReactElement } from "react";
 
-const page = () => {
+export default function RegistrationSuccessPage(): ReactElement {
   return (
     <div className="h-[calc(100vh-437px)] flex items-center justify-center">
       <Result
         status="success"
         title="Bạn đã gửi thông tin thành công"
         extra={[
-          <Link key={1} href="/">
-            Về trang chủ
+          <Link key="home-link" href="/" passHref>
+            <a className="text-blue-600 hover:underline">Về trang chủ</a>
           </Link>,
         ]}
       />
     </div>
   );
-};
-
-export default page;
+}

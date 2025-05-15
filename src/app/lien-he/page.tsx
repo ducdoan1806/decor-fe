@@ -5,17 +5,15 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import React from "react";
 export const metadata: Metadata = {
   title: "Contact - Anki Decor",
   description: "Nội thất shop Anki Decor",
 };
-
-const Contact = async () => {
+export const dynamic = 'force-dynamic';
+export default async function page() {
   try {
     const response = await api.get("/contact-info/");
     const data: RawContact[] = response?.data.results;
-    console.log("data: ", data);
     const location = data.find((item) => item.image);
     const grouped = Object.values(
       data.reduce(
@@ -29,7 +27,6 @@ const Contact = async () => {
         {}
       )
     );
-    console.log(grouped);
     return (
       <div className="bg-gray-50">
         <div className="container mx-auto px-4 py-8">
@@ -88,6 +85,4 @@ const Contact = async () => {
     console.error(error);
     notFound();
   }
-};
-
-export default Contact;
+}

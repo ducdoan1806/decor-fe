@@ -3,7 +3,7 @@ import Product from "@/components/Product";
 import api from "@/utils/api";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-
+export const dynamic = 'force-dynamic';
 export default async function Home() {
   try {
     const res = await Promise.all([

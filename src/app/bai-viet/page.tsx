@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Danh sách bài viết - Anki Decor",
   description: "Nội thất shop Anki Decor",
 };
+
+export const dynamic = 'force-dynamic';
+
 interface PageProps {
   searchParams: Promise<{ category?: string }>;
 }
