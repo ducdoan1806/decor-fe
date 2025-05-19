@@ -1,14 +1,32 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import api from "@/utils/api";
 
-export const metadata: Metadata = {
-  title: "Anki Decor",
-  description: "Nội thất shop Anki Decor",
-};
+export async function generateMetadata() {
+  const response = await api.get(`/website-information/`);
+  const websiteInfo = response.data?.results[0] || null;
 
+  return {
+    title: websiteInfo?.title + " - Anki Decor",
+    description: websiteInfo?.description,
+    openGraph: {
+      title: websiteInfo?.title + " - Anki Decor",
+      description: websiteInfo?.description,
+      url: websiteInfo?.url,
+      siteName: websiteInfo?.siteName,
+      images: [
+        {
+          url: websiteInfo?.thumbnail,
+          width: 1200,
+          height: 630,
+          alt: websiteInfo?.title,
+        },
+      ],
+      type: "website",
+    },
+  };
+}
 export default async function RootLayout({
   children,
 }: Readonly<{

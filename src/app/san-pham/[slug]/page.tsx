@@ -16,10 +16,24 @@ export async function generateMetadata({ params }: PageProps) {
   const slug = rawSlug.replace(/\.html$/, "");
   const response = await api.get(`/products/${slug}/`);
   const post: ProductType = response.data;
+  console.log("post: ", post);
 
   return {
     title: post?.name + " - Anki Decor",
     description: post?.description,
+    openGraph: {
+      title: post?.name + " - Anki Decor",
+      description: post?.description,
+      url: "ankidecor.com.vn",
+      siteName: "Anki Decor",
+      images: post?.images.map((item) => ({
+        url: item?.image,
+        width: 1200,
+        height: 630,
+        alt: post?.title,
+      })),
+      type: "website",
+    },
   };
 }
 const page = async ({ params }: PageProps) => {

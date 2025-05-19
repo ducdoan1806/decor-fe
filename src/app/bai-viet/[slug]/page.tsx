@@ -25,6 +25,21 @@ export async function generateMetadata({ params }: PageProps) {
   return {
     title: post?.title + " - Anki Decor",
     description: post?.description,
+    openGraph: {
+      title: post?.title + " - Anki Decor",
+      description: post?.description,
+      url: "ankidecor.com.vn",
+      siteName: "Anki Decor",
+      images: [
+        {
+          url: post?.thumbnail,
+          width: 1200,
+          height: 630,
+          alt: post?.title,
+        },
+      ],
+      type: "website",
+    },
   };
 }
 const page = async ({ params }: PageProps) => {
