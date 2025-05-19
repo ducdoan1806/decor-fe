@@ -16,7 +16,6 @@ export async function generateMetadata({ params }: PageProps) {
   const slug = rawSlug.replace(/\.html$/, "");
   const response = await api.get(`/products/${slug}/`);
   const post: ProductType = response.data;
-  console.log("post: ", post);
 
   return {
     title: post?.name + " - Anki Decor",
