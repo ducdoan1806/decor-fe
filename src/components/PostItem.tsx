@@ -9,7 +9,11 @@ interface PostItemProps {
   description?: string;
   image?: string;
 }
-
+function stripHtmlTags(html: string): string {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  return div.textContent || div.innerText || "";
+}
 const PostItem = ({ title, description, image }: PostItemProps) => {
   return (
     <div className="postItem">
@@ -29,7 +33,7 @@ const PostItem = ({ title, description, image }: PostItemProps) => {
           title={title}
           description={
             <p className="line-clamp-3">
-              {description ? description.replace(/^<p>|<\/p>$/g, "") : ""}
+              {description ? stripHtmlTags(description) : ""}
             </p>
           }
         />
