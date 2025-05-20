@@ -78,7 +78,10 @@ const page = async ({ params }: PageProps) => {
           <div className="flex space-x-2">
             <OrderButton />
           </div>
-          <p className="text-gray-700">{post?.description}</p>
+          <div
+            dangerouslySetInnerHTML={{ __html: post?.description }}
+            className="text-gray-700"
+          />
         </div>
       </div>
       {sameProduct.length ? (
