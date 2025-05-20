@@ -8,10 +8,10 @@ export async function generateMetadata() {
   const websiteInfo = response.data?.results[0] || null;
 
   return {
-    title: websiteInfo?.title + " - Anki Decor",
+    title: websiteInfo?.title,
     description: websiteInfo?.description,
     openGraph: {
-      title: websiteInfo?.title + " - Anki Decor",
+      title: websiteInfo?.title,
       description: websiteInfo?.description,
       url: websiteInfo?.url,
       siteName: websiteInfo?.siteName,
