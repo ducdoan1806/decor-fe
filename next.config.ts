@@ -2,7 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["placehold.co", "localhost"], // add the hostname you’re using
+    domains: [
+      "placehold.co",
+      "localhost",
+      "a.ankidecor.com.vn",
+      "ankidecor.com.vn",
+    ], // add the hostname you’re using
     // OR, if you need more granular control:
     // remotePatterns: [
     //   {
