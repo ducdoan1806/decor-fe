@@ -2,19 +2,24 @@
 
 import { Card } from "antd";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface PostItemProps {
   title?: React.ReactNode;
   description?: string;
   image?: string;
 }
-function stripHtmlTags(html: string): string {
-  const div = document.createElement("div");
-  div.innerHTML = html;
-  return div.textContent || div.innerText || "";
-}
+
 const PostItem = ({ title, description, image }: PostItemProps) => {
+  const [cleanDescription, setCleanDescription] = useState("");
+
+  useEffect(() => {
+    if (description) {
+      const div = document.createElement("div");
+      div.innerHTML = description;
+      setCleanDescription(div.textContent || div.innerText || "");
+    }
+  }, [description]);
   return (
     <div className="postItem">
       <Card
@@ -31,11 +36,7 @@ const PostItem = ({ title, description, image }: PostItemProps) => {
       >
         <Card.Meta
           title={title}
-          description={
-            <p className="line-clamp-3">
-              {description ? stripHtmlTags(description) : ""}
-            </p>
-          }
+          description={<p className="line-clamp-3">{cleanDescription}</p>}
         />
       </Card>
     </div>
