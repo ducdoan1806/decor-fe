@@ -12,6 +12,9 @@ const Footer = () => {
   const [contacts, setContacts] = useState<
     { type: string; data: RawContact[] }[]
   >([]);
+  const image = contacts
+    .find((item) => item.type === "location")
+    ?.data.find((item) => item?.image);
   useEffect(() => {
     const getData = async () => {
       const response = await api.get("/contact-info/");
@@ -68,6 +71,7 @@ const Footer = () => {
                         | "facebook"
                         | "phone"
                         | "location"
+                        | "zalo"
                     }
                   />
                   <div className="space-y-0.5 ">
@@ -86,10 +90,22 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h4 className="text-lg font-semibold text-red-700 mb-4">
-              Connect With Us
-            </h4>
-            <ul className="space-y-2"></ul>
+            <Link
+              href={image?.value || "#"}
+              target="_blank"
+              className="relative group overflow-hidden rounded-md block"
+            >
+              <span className="absolute bg-black/30 transition-all top-0 left-0 right-0 bottom-0 z-10 opacity-0 group-hover:opacity-100 flex justify-center items-center">
+                Click to open map
+              </span>
+              <Image
+                className="group-hover:scale-125 transition-all"
+                width={800}
+                height={600}
+                src={image?.image || ""}
+                alt=""
+              />
+            </Link>
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-gray-700 text-center">
