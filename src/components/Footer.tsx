@@ -98,13 +98,15 @@ const Footer = () => {
               <span className="absolute bg-black/30 transition-all top-0 left-0 right-0 bottom-0 z-10 opacity-0 group-hover:opacity-100 flex justify-center items-center">
                 Click to open map
               </span>
-              <Image
-                className="group-hover:scale-125 transition-all"
-                width={800}
-                height={600}
-                src={image?.image || ""}
-                alt=""
-              />
+              {image?.image && (
+                <Image
+                  className="rounded-md group-hover:scale-125 transition-all"
+                  width={800}
+                  height={600}
+                  src={image.image}
+                  alt=""
+                />
+              )}
             </Link>
           </div>
         </div>
