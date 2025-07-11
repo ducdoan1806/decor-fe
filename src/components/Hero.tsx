@@ -20,7 +20,7 @@ interface HeroProps {
 const Hero = ({ slides }: HeroProps) => (
   <Carousel arrows infinite draggable>
     {slides.map((slide) => (
-      <Link href={slide?.link} target="_blank" key={slide?.id}>
+      <Link href={slide?.link || "#"} target="_blank" key={slide?.id}>
         <div className="w-full h-auto">
           <Image
             className="block"
