@@ -86,6 +86,7 @@ const Footer = () => {
                         href={item?.value}
                         key={idx}
                         className="block hover:underline"
+                        target="_blank"
                       >
                         {contact.type === "phone" || contact.type === "zalo"
                           ? formatPhoneVN(item?.name)
