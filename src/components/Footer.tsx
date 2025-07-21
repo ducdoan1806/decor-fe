@@ -7,13 +7,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import ContactIcon from "./ContactIcon";
 import Link from "next/link";
+import { formatPhoneVN } from "@/utils/util";
 
-const formatPhoneVN = (phone: string) => {
-  let n = phone.replace(/\D/g, "");
-  if (n.startsWith("84")) n = "0" + n.slice(2);
-  if (n.length === 10) return n.replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3");
-  return phone;
-};
 const Footer = () => {
   const [contacts, setContacts] = useState<
     { type: string; data: RawContact[] }[]

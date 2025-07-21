@@ -1,6 +1,7 @@
 import ContactIcon from "@/components/ContactIcon";
 import { RawContact } from "@/types";
 import api from "@/utils/api";
+import { formatPhoneVN } from "@/utils/util";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   title: "Contact - Anki Decor",
   description: "Nội thất shop Anki Decor",
 };
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export default async function page() {
   try {
     const response = await api.get("/contact-info/");
@@ -42,8 +43,14 @@ export default async function page() {
                 >
                   <p className="text-white flex items-center justify-center bg-black flex-1 text-2xl max-w-[70px]">
                     <ContactIcon
+                      className="mt-1"
                       type={
-                        item.type as "email" | "facebook" | "phone" | "location"
+                        item.type as
+                          | "email"
+                          | "facebook"
+                          | "phone"
+                          | "location"
+                          | "zalo"
                       }
                     />
                   </p>
@@ -58,7 +65,9 @@ export default async function page() {
                         target="_blank"
                         className="text-gray-600 text-sm hover:underline block"
                       >
-                        {contact?.name}
+                        {item.type === "phone" || item.type === "zalo"
+                          ? formatPhoneVN(contact?.name)
+                          : contact?.name}
                       </Link>
                     ))}
                   </div>
