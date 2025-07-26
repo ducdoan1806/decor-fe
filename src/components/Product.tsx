@@ -20,7 +20,7 @@ const Product = ({ title, products, viewMore }: ProductProps) => {
           <PostItem
             key={item?.id}
             description={item?.description || item?.content}
-            image={item?.thumbnail || item?.images[0]?.image}
+            image={item?.thumbnail || item?.images?.[0]?.image || ""}
             title={
               <Tooltip title={item?.title || ""}>
                 <Link
