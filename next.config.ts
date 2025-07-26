@@ -2,12 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    // domains: [
-    //   "placehold.co",
-    //   "localhost",
-    //   "a.ankidecor.com.vn",
-    //   "ankidecor.com.vn",
-    // ],
+    domains: [
+      "placehold.co",
+      "localhost",
+      "a.ankidecor.com.vn",
+      "ankidecor.com.vn",
+    ],
     remotePatterns: [
       {
         protocol: "https",
