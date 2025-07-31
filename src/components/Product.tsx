@@ -28,7 +28,7 @@ const Product = ({ title, products, viewMore }: ProductProps) => {
                     item?.thumbnail !== undefined ? "bai-viet" : "san-pham"
                   }/${item?.slug}.html`}
                 >
-                  <h3 className="text-red-700 hover:text-red-500 text-lg line-clamp-2">
+                  <h3 className="text-red-700 hover:text-red-500 text-lg line-clamp-1">
                     {item?.title || item?.name || "--"}
                   </h3>
                 </Link>
