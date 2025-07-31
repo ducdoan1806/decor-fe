@@ -92,9 +92,9 @@ const Header = () => {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-white transform transition-transform duration-300 z-40 md:hidden \
-            ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
-        `}
+        className={`fixed inset-0 bg-white transform transition-transform duration-300 z-40 md:hidden ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         <div className="flex items-center justify-between p-4 border-b">
           <Link href="/">

@@ -12,6 +12,7 @@ import { Tag, Tooltip } from "antd";
 import { TagFilled } from "@ant-design/icons";
 import PostItem from "@/components/PostItem";
 import { Post } from "@/types";
+import { stripHtml } from "@/utils/util";
 interface PageProps {
   params: Promise<{ slug: string; category: string }>;
 }
@@ -24,11 +25,19 @@ export async function generateMetadata({ params }: PageProps) {
 
   return {
     title: post?.title + " - Anki Decor",
-    description: post?.description,
+    description: stripHtml(post?.description).slice(0, 160),
+    images: [
+      {
+        url: post?.thumbnail,
+        width: 1200,
+        height: 630,
+        alt: post?.title,
+      },
+    ],
     openGraph: {
       title: post?.title + " - Anki Decor",
-      description: post?.description,
-      url: "ankidecor.com.vn",
+      description: stripHtml(post?.description).slice(0, 160),
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/bai-viet/${post?.slug}.html`,
       siteName: "Anki Decor",
       images: [
         {

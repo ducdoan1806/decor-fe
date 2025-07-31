@@ -3,6 +3,7 @@ import OrderButton from "@/components/OrderButton";
 import PostItem from "@/components/PostItem";
 import { ProductType } from "@/types";
 import api from "@/utils/api";
+import { stripHtml } from "@/utils/util";
 import { Carousel } from "antd";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,11 +20,17 @@ export async function generateMetadata({ params }: PageProps) {
 
   return {
     title: post?.name + " - Anki Decor",
-    description: post?.description,
+    description: stripHtml(post?.description).slice(0, 160),
+    images: post?.images.map((item) => ({
+      url: item?.image,
+      width: 1200,
+      height: 630,
+      alt: post?.title,
+    })),
     openGraph: {
       title: post?.name + " - Anki Decor",
-      description: post?.description,
-      url: "ankidecor.com.vn",
+      description: stripHtml(post?.description).slice(0, 160),
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/san-pham/${post?.slug}.html`,
       siteName: "Anki Decor",
       images: post?.images.map((item) => ({
         url: item?.image,
