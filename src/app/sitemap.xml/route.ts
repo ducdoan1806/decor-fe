@@ -9,7 +9,7 @@ interface PageEntry {
   lastmod: string; // YYYY-MM-DD
   priority: number; // 0.0 - 1.0
 }
-
+export const revalidate = 86400 
 // 1. Hàm lấy danh sách URL từ API của bạn
 async function fetchPageEntries(): Promise<PageEntry[]> {
   try {
