@@ -29,6 +29,8 @@ const PostItem = ({ title, description, image }: PostItemProps) => {
             width={350}
             height={350}
             src={image || "https://placehold.co/400x300"}
+            sizes="300px"
+            priority={false}
             unoptimized
             alt=""
           />
