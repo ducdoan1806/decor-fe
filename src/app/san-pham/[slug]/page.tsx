@@ -65,7 +65,14 @@ const page = async ({ params }: PageProps) => {
                   className="w-full h-auto"
                   width={600}
                   height={600}
-                  src={image?.image}
+                  // src={image?.image}
+                  src={
+                    image?.image
+                      ? image?.image.includes("localhost")
+                        ? image?.image
+                        : image?.image.replace("http", "https")
+                      : "/placeholder.png"
+                  }
                   alt={image?.alt_text}
                 />
               </div>

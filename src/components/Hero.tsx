@@ -26,7 +26,13 @@ const Hero = ({ slides }: HeroProps) => (
             className="block"
             width={1920}
             height={1080}
-            src={slide?.image ?? "/placeholder.png"}
+            src={
+              slide?.image
+                ? slide?.image.includes("localhost")
+                  ? slide?.image
+                  : slide?.image.replace("http", "https")
+                : "/placeholder.png"
+            }
             alt=""
           />
         </div>

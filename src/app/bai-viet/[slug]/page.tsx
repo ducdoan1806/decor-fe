@@ -125,8 +125,15 @@ const page = async ({ params }: PageProps) => {
                         <Image
                           width={400}
                           height={400}
+                          // src={
+                          //   item?.thumbnail || "https://placehold.co/400x400"
+                          // }
                           src={
-                            item?.thumbnail || "https://placehold.co/400x400"
+                            item?.thumbnail
+                              ? item?.thumbnail.includes("localhost")
+                                ? item?.thumbnail
+                                : item?.thumbnail.replace("http", "https")
+                              : "/placeholder.co/400x400"
                           }
                           unoptimized
                           alt=""

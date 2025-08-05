@@ -28,7 +28,14 @@ const PostItem = ({ title, description, image }: PostItemProps) => {
           <Image
             width={350}
             height={350}
-            src={image || "https://placehold.co/400x300"}
+            // src={image || "https://placehold.co/400x300"}
+            src={
+              image
+                ? image.includes("localhost")
+                  ? image
+                  : image.replace("http", "https")
+                : "https://placehold.co/400x300"
+            }
             sizes="300px"
             priority={false}
             unoptimized
