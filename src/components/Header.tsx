@@ -33,10 +33,11 @@ const Header = () => {
         <Link href="/" className="block w-20">
           <Image
             priority
-            width={500}
-            height={500}
+            width={640}
+            height={530}
             src="/ankiLogo.png"
             alt="Logo"
+            layout="intrinsic"
           />
         </Link>
 
