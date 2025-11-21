@@ -1,7 +1,7 @@
 "use client";
 import api from "@/utils/api";
 import { useOutside } from "@/utils/useOutSide";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import { useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
@@ -27,6 +27,10 @@ const ContactModal = ({ onClose, title, ctaText }: ContactModalProps) => {
         message: data.description ? data.description.trim() : "",
       });
       onClose();
+      Modal.success({
+        title: "Thành công",
+        content: "Thông tin của bạn đã được gửi thành công",
+      });
     } catch (error) {
       console.error(error);
       if (
